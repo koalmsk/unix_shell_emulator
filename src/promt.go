@@ -4,9 +4,10 @@ import (
 	"fmt"
 	"os"
 	"os/user"
+	"strings"
 )
 
-func makePrompt() string {
+func makePrompt(custom string) string {
 	currentUser, err := user.Current()
 	username := ""
 
@@ -17,6 +18,13 @@ func makePrompt() string {
 	hostname, _ := os.Hostname()
 	cwd, _ := os.Getwd()
 
-	return fmt.Sprintf("(EMU)%s@%s:%s$ ", username, hostname, cwd)
+	if custom == "" {
+		return fmt.Sprintf("(EMU)%s@%s:%s$ ", username, hostname, cwd)
+	}
 
+	return strings.NewReplacer(
+		"{user}", username,
+		"{host}", hostname,
+		"{cwd}", cwd,
+	).Replace(custom)
 }

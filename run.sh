@@ -2,4 +2,4 @@
 
 cd "$(dirname "$0")/src" || exit 1
 
-go run .
+go run . "$@"

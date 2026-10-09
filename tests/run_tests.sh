@@ -1,17 +1,17 @@
-
 #!/bin/sh
 
-set -eu
+CDPATH="" cd -- "$(dirname -- "$0")" || exit 1
 
-cd "$(dirname "$0")"
-
-echo "Running REPL tests..."
+echo "Running tests..."
 echo
 
-./test_commands.sh
+./test_commands.sh || exit 1
 echo
 
-./test_errors.sh
+./test_errors.sh || exit 1
+echo
+
+./test_startup.sh || exit 1
 echo
 
 echo "All tests passed!"
